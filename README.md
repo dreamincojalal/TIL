@@ -158,3 +158,39 @@
 1. 인스턴스가 유일해야 함
 2. 멀티쓰레드 환경에서 조심해야함
 3. 싱글톤 인스턴스가 계속해서 유지되면, 메모리를 계속해서 점유하기 때문에 메모리 관리가 필요함
+
+### Today **24.01.15** I learned 파이썬 기초 문법<br/>
+---
+1. Style Guide
+    1. 직관적인 변수명
+    2. 적절한 들여쓰기 사용
+
+2. 문자열의 특징
+    1. 순서가 있음
+    2. 변경이 불가능함
+        - `my_str = 'hello'`<br/>`'my_str[1] = 'z` <br/> TypeError: 'str' object does not support item assignment
+    
+3. Escape 시퀀스
+    1. 역슬래시 \ 뒤에 특수문자가 와서 특수한 기능을 하는 문자 조합
+        1. `\n` 줄바꿈
+        2. `\t` 탭
+        3. `\\` 백슬래시
+        4. `\'` 작은 따옴표
+        5. `\"` 큰 따옴표
+
+4. 문자열 내에 변수나 표현식 삽입이 가능한 f-string
+    - `bugs = 'roaches`<br>`counts = 13`<br>`area = living room`
+    - `print(f'Debugging {bugs}{counts}{area}.)` <br>#Debugging roacehs 13 living room
+    - 간단한 표현식도 사용이 가능하다.<br>`{3+2}`
+
+5. 인덱스
+    - 'H  E  L  L  O '<br>
+    - -5 -4 -3 -2 -1<br>
+    -  0   1   2   3   4
+
+6. 슬라이싱
+    - `my_str = 'Hello'`
+    - `my_str[:3]` #'Hel'
+    - `my_str[3:]` #'lo'
+    - `my_str[0:5:2]` #'hlo'
+    - `my_str[::-1]` #'olleh'문자열 뒤집기

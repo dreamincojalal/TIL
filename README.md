@@ -318,3 +318,360 @@ if ('b' and 'a') # a
 `*` 반복 연산자
 
 소괄호의 우선순위가 가장 높으므로 코드를 짤때 grouping 해주는게 중요하다.
+
+### Today **24.01.17** I learned 파이썬 기초 문법<br/>
+---
+
+## 함수
+1. 함수의 특징
+    - 특정 작업을 수행하기 위한 재사용 가능한 코드 묶음
+    - 코드의 중복 방지
+    - 재사용성이 높아지고, 코드의 가독성과 유지 보수성 향상
+
+2. 내장 함수
+    - 파이썬이 기본적으로 제공하는 함수(별도의 import 없이 사용 가능)
+
+3. 함수 호출
+    - 함수를 실행하기 위해 함수의 이름을 사용하여 함수의 코드 블록을 실행하는 것
+    - 함수를 호출하기 위해선 함수의 이름과 필요한 인자(argument)를 전달해야 함
+    - 호출 부분에서 전달된 인자는 함수 정의 시 작성한 매개변수에 대입
+
+4. 함수 정의
+    - 정의는 def 키워드로 시작
+    - def 키워드 이후 함수 이름 작성
+    - 괄호안에 매개변수를 정의할 수 있음
+    - 매개변수는 함수에 전달되는 값을 나타냄
+
+5. 함수 반환 값
+    - 함수는 필요한 경우 결과를 반환할 수 있음
+    - return 키워드 이후에 반환할 값을 명시
+    - return문은 함수의 실행을 종료하고(함수의 종료조건), <br>
+    결과를 호출 부분으로 반환(return 이후는 죽은 코드)
+    - return이 없는 함수도 존재
+
+6. 매개변수와 인자의 차이
+    - 매개변수 : 함수를 정의할 때, 함수가 받을 값을 나타내는 변수
+    - 인자 : 함수를 호출할 때, 실제로 전달되는 값
+    ```
+    def sum(num1, num2): #num1, num2 는 매개변수
+        return num1+num2
+    
+    sum(1, 2) #1, 2는 인자
+    ```
+
+## 인자
+
+1. 위치 인자
+    - 함수 호출 시 인자의 위치에 따라 전달되는 인자
+    - 위치 인자는 함수 호출 시 반드시 값을 전달해야 함
+    ```
+    def greet(name, age):
+        print(f'안녕하세요, {name}님! {age}살이시군요.')
+    
+    greet('Alice', 25) #안녕하세요, Alice님! 25살이시군요.
+    ```
+
+2. 기본 인자 값
+    - 함수 정의에서 매개변수에 기본 값을 할당하는 것
+    - 함수 호출 시 인자를 전달하지 않으면, 기본값이 매개변수에 할당됨
+    ```
+    def greet(name, age = 30):
+        print(f'안녕하세요, {name}님! {age}살이시군요.')
+    
+    greet('Alice', 25) #안녕하세요, Alice님! 25살이시군요.
+    greet('Bob') #안녕하세요, Bob님! 30살이시군요.
+    ```
+
+3. 키워드 인자
+    - 함수 호출 시 인자의 이름과 함께 값을 전달하는 인자
+    - 매개변수와 인자를 일치시키지 않고, 특정 매개변수에 값을 할당할 수 있음
+    - 인자의 순서는 중요하지 않으며, 인자의 이름을 명시하여 전달
+        - 단 호출 시 키워드 인자는 위치인자 뒤에 위치해야 함
+    `greet(age=30, 'Bob') #positional  argument follows keyword argument`
+
+4. 임의의 인자 목록
+    - 정해지지 않은 개수의 인자를 처리하는 인자
+    - 함수 정의 시 매개변수 앞에 '*'를 붙여 사용하며, 여러 개의 인자를 tuple로 처리
+
+    ```
+    def cal_sum(*args):
+        print(args)
+        total = sum(args)
+        print(f'합계: {total}')
+    cal_sum(1, 2, 3)
+    #(1, 2, 3)
+    #합계 : 6
+    ```
+
+5. 임의의 키워드 인자 목록
+    - 정해지지 않은 개수의 키워드 인자를 처리하는 인자
+    - 함수 정의 시 매개변수 앖에 '**'를 붙여 사용하며, 여러개의 인자를 dictionary로 묶어 처리
+    ```
+    def print_info(**kargs):
+        print(kargs)
+    print_info(name = 'Eve', age = 30) # {'name': 'Eve','age': 30 }
+    ```
+
+---
+
+## 파이썬의 범위(Scope)
+
+1. 종류
+    - 함수는 코드 내부에 local scope를 생성하며, 그 외의 공간인 global scope로 구분한다.
+    1. scope
+        - global scope : 코드가 어디든 참조할 수 있는 공간
+        - local scope : 함수가 만든 scope(함수 내부에서만 참조 가능)
+    2. variable
+        - global variable : global scope에 정의된 변수
+        - local variable : local scope에 정의된 변수
+
+2. 변수의 수명 주기
+    - 변수의 수명주기는 변수가 선언되는 위치와 스코프에 따라 결정됨
+    1. built in scope
+        - 파이썬이 실행된 이후 영원히 유지
+    2. global scope
+        - 모듈이 호출된 시점 이후 혹은 인터프리터가 끝날 때까지 유지
+    3. local scope
+        - 함수가 호출될 때 생성되고, 함수가 종료될 때까지 유지
+    
+3. 이름 검색 규칙
+    - Local scope > Enclosed scope > Global scope > Built in scope<br> 변수가 로컬에 없으면 Enclosed로, Global, Built-in 순서로 찾아나감.<br>함수 내에서는 바깥 Scope의 변수에 접근 가능하나 수정은 할 수 없음
+    ```
+    print(sum)
+    print(sum(range(3))) # 3
+
+    sum = 5
+
+    print(sum) # 5
+    print(sum(range(3))) #TypeError:'int'object is not callable
+    5(range(3))
+    ```
+
+4. Global 키워드
+    - 변수의 스코프를 전역 범위로 지정하기 위해 사용
+    - 일반적으로 함수 내에서 전역 변수를 수정하려는 경우에 사용
+    - 권장되지는 않음
+    - 함수로 값을 바꾸고자 한다면 항상 인자로 넘기고, 함수의 반환값을 사용하는 것을 권장
+
+5. 재귀 함수
+    - 함수 내부에서 자기 자신을 호출하는 함수
+    - 특정 알고리즘 식을 표현할 때 변수의 사용이 줄어들며, 코드의 가독성이 높아짐
+    - 1개 이상의 base case(종료상황)가 존재하고, 수렴하도록 작성
+    - 예시
+    ```
+    def factorial(n):
+	    if n === 0:
+            return 1
+        return n*factorial(n-1)
+        
+    result = factorial(5)
+    print(result) # 120
+    ```
+    - n -= 1 없어도 동작하는 이유는 n = 0이 될때까지 반복되며, 종료조건을 설정하여 <br> 
+    재귀호출이 멈추도록 하기 때문이다. 문제를 작은문제로 분할하는데 사용된다.
+    - 종료조건을 명확히 해야한다.(무한 호출에 빠짐)
+    - 반복되는 호출이 종료조건을 향하도록
+
+## 유용한 내장 함수
+    
+1. map
+    - map(function, iterable)
+    - 순회 가능한 데이터 구조(iterable)의 모든 요소에 함수를 적용하고, 그 결과를 map object로 반환
+    - function > 함수, iterable > 반복 가능한 것(시퀀스, 리스트, 튜플 등등)
+    ```
+    a = ['1','2','3','4','5']
+    result = list(map(int, a))
+    print(result) # [1,2,3,4,5]
+    ```
+
+2. zip
+    - zip(*iterables)
+    - 임의의 iterable을 모아 튜플을 원소로 하는 zip object 반환
+    ```
+    girls = ['jane', 'ashley']
+    boys = ['peter', 'jay']
+    pair = zip(girls, boys)
+
+    print(list(pair)) #[('jane','peter'),('ashley','jay)]
+    ```
+3. lambda
+    - lambda 매개변수: 표현식
+        - 매개변수
+            - 함수에 전달되는 매개변수들
+            - 여러개의 매개변수가 있을 경우 쉼표로 구분
+        - 표현식
+            - 함수의 실행되는 코드블록으로, 결과값을 반환하는 표현식으로 작성
+    - 간단한 연산이나 함수를 한줄로 표현할 때 사용
+    - 함수를 매개변수로 전달하는 경우에도 유용하게 활용
+    - 제한사항
+        - 로직이 복잡한 함수는 람다함수로 변경 불가능
+        - 1줄로 작성해야 함
+
+## Packing과 Unpacking
+1. 패킹
+    1. '*'을 활용한 패킹
+        - 인자 개수에 관계없이 튜플 하나로 패킹 돼 내부에서 처리
+        ```
+        def my_func(*objects):
+            print(objects) #(1,2,3,4,5)
+            print(type(objects)) #<class 'tuple'>
+
+        my_func(1,2,3,4,5)
+        ```
+2. 언패킹
+    - 튜플이나 리스트 등의 객체의 요소들을 개별 변수에 할당
+    ```
+    packed_values = 1,2,3,4,5
+    a,b,c,d,e = packed_values
+    print(a,b,c,d,e) # 1 2 3 4 5
+    ```
+    1. '*'을 활용한 언패킹
+    ```
+    names = ['alice', 'jane', 'peter']
+    print(*names) # alice jane peter
+    ```
+    2. '**'을 활용한 언패킹
+    ```
+    def my_function(x,y,z):
+        print(x,y,z)
+
+    my_dict = {'x':1,'y':2,'z':3}
+    my_function(**my_dict) # 1 2 3
+    ```
+### '*'
+- 패킹 연산자로 사용될 때
+    - 여러개의 인자를 하나의 튜플로 묶는 역할
+- 언패킹 연산자로 사용될 때
+    - 시퀀스나 반복 가능한 객체를 각각의 요소로 언패킹하여 함수의 인자로 전달
+### '**'
+- 언패킹 연산자로 사용될 때 딕셔너리의 키-값 쌍을 키워드 인자로 언패킹 하여 함수의 인자로 전달하는 역할
+
+### Today **24.01.18** I learned 파이썬 기초 문법<br/>
+---
+
+## 모듈
+1. 모듈
+    - 한 파일로 묶인 변수와 함수의 모음
+    - 특정한 기능을 하는 코드가 작성된 파이썬 파일
+
+2. 모듈 가져오기
+    - 모듈 내 변수와 함수에 접근하려면 import 문이 필요
+    `import math`
+
+3. 모듈 사용하기
+    - '.(dot)'은 점의 왼쪽 객체에서 점의 오른쪽 이름을 찾아라 라는 의미의 연산자
+    `print(math.pi)`
+
+4. 모듈을 import 하는 다른 방법
+    - from 절을 활용해 특정 모듈을 미리 참조하고 어떤 요소를 import 할지 명시
+    ```
+    from math import pi, sqrt
+
+    print(pi)
+    print(sqrt(4))
+    ```
+    - math에서 pi와 sqrt만 사용 한다는 코드, math 입력 없이 바로 사용 가능
+    - 명시적이진 않아서 권장하지 않음
+    - 이름이 같은 함수와 변수가 존재할 경우 마지막에 입력된 코드로 덮혀짐
+
+5. 모듈 주의사항
+    - 만약 서로 다른 모듈이 같은 이름의 함수를 제공할 경우 문제 발생
+    - 마지막에 import된 이름으로 대체 됨
+    ```
+    from math import pi, sqrt # sqrt
+    from my_math importr sqrt # sqrt
+    # my_math의 sqrt로 이용됨
+    ```
+    - 모듈 내 모든 요소를 한번에 import 하는 * 요소가 있는데 권장되진 않음(명시적이지 않기 때문에)
+
+6. 사용자 정의 모듈
+    - 다른 파일에서 직접 정의한 함수도 모듈로 이용이 가능하다.
+    - 크기 : 모듈 < 패키지 < 라이브러리
+
+7. 패키지
+    - 관련된 모듈들을 하나의 디렉토리에 모아놓은 것
+    - PSL 내부 패키지 < 외부 패키지(pip를 사용하여 설치 후 import)
+    
+8. pip
+    - 외부 패키지들을 설치하도록 도와주는 파이썬의 패키지 관리 시스템
+    - PYPI에 저장된 외부 패키지들을 설치
+    - 설치 방법
+        - pip install '모듈명'
+        - 최소, 특정, 최신 버전을 선택해서 받아올 수 있음.
+
+9. 패키지 사용 목적
+    - 모듈들의 이름공간을 구분하여 충돌을 방지
+    - 모듈들을 효율적으로 관리하고 재사용 할 수 있도록 돕는 역할
+
+---
+## 제어문
+
+1. 제어문
+    - 코드의 실행 흐름을 제어하는데 사용되는 구문
+    - 조건에 다라 코드 블록을 실행하거나 반복적으로 코드를 실행
+
+2. 조건문
+    - 주어진 조건식을 평가하여 해당 조건이 참인 경우에만 코드블록을 실행
+    - 동시에 검사하는것이 아니라 순차적으로 비교
+
+3. 반복문
+    1. for
+        - 임의의 시퀀스 항목들을 시퀀스에 들어있는 순서대로 반복(str, tuple, list, range...)
+        - for 변수 in 반복가능한 객체(시퀀스 + 딕셔너리, set):
+            코드블록
+        - 문자열은 시퀀스다.(문자열 순회도 가능함)
+        - 딕셔너리 역시 순회가 가능하다.
+        ```
+        my_dict = {
+            'x' = 10,
+            'y' = 20,
+            'z' = 30,
+        }
+        for key in my_dict:
+            print(key) # x y z
+            print(my_dict[key]) 10 20 30
+        ```
+        - 딕셔너리 기본 반복은 키 값만 출력
+        - 인덱스로 리스트 순회
+
+    2. while
+        - 주어진 조건식이 참일 동안 코드를 반복해서 실행(종료조건 반드시 필요)
+        - 반복 제어
+            - break : 반복을 즉시 중지
+            - continue : 다음 반복으로 건너 뜀(하단의 코드를 읽지않고 다음 반복으로 넘어감)
+            - 주의사항 : break, continue를 남용하는 것은 코드의 가독성을 저하할 수 있음
+            - 특정한 종료조건을 만들어 break를 대신하거나, if문을 사용해 continue처럼<br> 코드를 건너뛸 수도 있음
+
+## List Comprehension
+
+1. 리스트 컨프리헨션
+    - 간결하고 효율적인 리스트 생성방법
+    - [expression for 변수 in iterable]
+    - list(expression for 변수 in iterable)
+
+    ```
+    for num in numbers:
+        squared_numbers.append(num**2)
+        
+    squared_numbers = [num**2 for num in numbers]
+    ```
+    - [expression for 변수 in iterable if 조건식]
+    - list(expression for 변수 in iterable if 조건식)
+    - 변환 연습을 하되, 남용은 하지 말 것.
+
+## 참고사항
+1. pass
+    - 아무런 동작도 수행하지 않고 넘어가는 역할
+    - 문법적으로 문장이 필요하지만 실행에는 영향을 주지 않아야 할 때 사용
+
+2. enumerate
+    - emumerate(iterable, start = 0)
+    - iterable 객체의 각 요소에 대해 인덱스와 함께 반환하는 내장함수
+    ```
+    fruits = ['apple', 'banana', 'cherry']
+    for index, fruit in enumerate(fruits):
+        print(f'인덱스 {index}: {fruit}')
+    # 인덱스 0: apple
+    # 인덱스 1: banana
+    # 인덱스 2: cherry
+    ```

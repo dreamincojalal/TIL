@@ -675,3 +675,4 @@ if ('b' and 'a') # a
     # 인덱스 1: banana
     # 인덱스 2: cherry
     ```
+

@@ -49,18 +49,18 @@
 # print(a)
 # print(b)
 
-class Person:
-    def __init__(self, name, age, email, number):
-        self.name = name
-        self.age = age
-        self.email = email
-        self.number = number
+# class Person:
+#     def __init__(self, name, age, email, number):
+#         self.name = name
+#         self.age = age
+#         self.email = email
+#         self.number = number
         
-class Student(Person):
-    def __init__(self, name, age, gpa, abc):
-        super().__init__(name, age)
-        self.gpa = gpa
-        self.abc = abc
+# class Student(Person):
+#     def __init__(self, name, age, gpa, abc):
+#         super().__init__(name, age)
+#         self.gpa = gpa
+#         self.abc = abc
         
-kkk = Student('aa', 20, 3.5, 'mola')
-print(kkk)
+# kkk = Student('aa', 20, 3.5, 'mola')
+# print(kkk)

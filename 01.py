@@ -1,16 +1,6 @@
-V = int(input())
-string = input()
+def print_info(**kargs):
+        print(kargs)
 
-# countA = lst.count('A')
-# countB = lst.count('B')
+print_info(dic = 'ab', gpa = 3.5)
 
-# if countA > countB :
-#     print('A')
-
-# elif countA < countB :
-#     print('B')
-
-# else :
-#     print('Tie')
-# print(countB)
-print(string)
+print_info(name = 'Eve', age = 30) # {'name': 'Eve','age': 30 }

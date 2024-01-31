@@ -44,3 +44,78 @@
     1. 여러 경우 중 하나를 결정해야 할 때마다 그 순간에 최적이라고 생각되는 것을 선택해 나가는 방식으로 진행하여 최종적인 해답에 도달
     2. 각 선택의 시점에서 이루어지는 결정은 지역적으로는 최적이지만, 그 선택들을 계속 수집하여 최종적인 해답을 만들었다고 하여, 그것이 최적이라는 보장은 없음.
     3. 일반적으로, 머릿속에 떠오르는 생각을 검증 없이 바로 구현하면 Greedy 접근이 된다.
+
+# TIL
+### Today **24.01.31** I learned 2차원 배열<br/>
+---
+## 1. 2차원 배열
+1. 특징
+    - 1차원 list를 묶어놓은 list
+    - 2차원 이상의 다차원 list는 차원에 따라 index를 선언
+    - 2차원 list의 선언 : 세로길이(행의 개수), 가로길이(열의 갯수)를 필요로 함
+    - python 에서는 데이터 초기화를 통해 변수선언과 초기화가 가능함
+        arr = [[1,2,3,4],[5,6,7,8]](2행 4열의 2차원 list) 
+
+2. 배열 순회
+    - n`x`m 배열의 n`*`m개의 모든 원소를 빠짐없이 조사하는 방법
+    ```
+    # i 행의 좌표
+    # j 열의 좌표
+    행 우선 순회
+    for i in range(n):
+    	for j in range(m):
+        	print(array[i][j])
+    ```
+    ```
+    열 우선 순회
+    for j in range(m):
+    	for i in range(n):
+        	print(array[i][j])
+    ```
+    ```
+    지그재그 순회
+    for i in range(n):
+        for j in range(m):
+            print(array[i][j+(m-1-2*j)*(i%2)])
+    ```
+3. 전치 행렬
+    ```
+    i : 행의 좌표, len(arr)
+    j : 열의 좌표, len(arr[0])
+    arr = [[1,2,3],[4,5,6],[7,8,9]] # 3*3 행렬
+
+    for i in range(3):
+        for j in range(3):
+        if i < j:
+            arr[i][j], arr[j][i] = arr[j][i], arr[i][j]
+    # i != j 일때 순서 바꿔줌
+    ```
+## 2. 슬라이딩 윈도우
+1. 특징
+    - 고정 사이즈의 윈도우가 이동하면서 윈도우 내에 있는 데이터를 이용해 문제를 풀이하는 알고리즘
+    - 배열, 리스트 요소의 일정 범위의 값을 비교할 때 사용하면 매우 유용
+
+2. 투포인터와의 차이
+    - 부분 배열 길이의 변화 여부
+    - 투 포인터는 부분 배열의 길이가 가변적이다.
+    - 투 포인터는 배열의 구간을 정할 2개의 포인터 변수가 필요하다.
+    - 슬라이딩 윈도우 알고리즘은 부분 배열의 길이가 고정적이다.
+    - 배열이 고정적인 크기를 가지고 있어, 변수가 하나만 있어도 된다.
+
+3. [슬라이드 윈도우 문제 백준 2559 수열](https://www.acmicpc.net/problem/2559)
+    - 풀이법
+    ```
+    N, K = map(int, input().split())
+    lst = list(map(int, input().split()))
+
+    part_sum = sum(lst[:K]) # lst[:K]까지의 합을 part_sum에 할당
+    answer = part_sum # part_sum 값을 answer에 저장
+
+    max_V = 0 # 최댓값을 넣을 변수
+    for i in range(N-K): # 0부터 N-K+1만큼 반복
+        part_sum += lst[i+K]-lst[i] # part_sum 값에 lst의 i번째 값을 빼고, i+K번째 값을 더해준다.
+        if answer < part_sum: # 그 값이 더 크면 answer 값 갱신
+            answer = part_sum
+    
+    print(answer)
+    ```
